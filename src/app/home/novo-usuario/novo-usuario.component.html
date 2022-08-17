@@ -1,0 +1,75 @@
+<h4 class="text-center">Cadastro</h4>
+
+<form class="form mt-4" [formGroup]="novoUsuarioForm" (submit)="cadastrar()">
+  <div class="form-group">
+    <input placeholder="e-mail" class="form-control" formControlName="email" />
+    <app-mensagens
+      *ngIf="
+        novoUsuarioForm.get('email')?.errors?.['required'] &&
+        novoUsuarioForm.get('email')?.touched
+      "
+      mensagem="Email Obrigatório"
+    >
+    </app-mensagens>
+    <app-mensagens
+      *ngIf="
+        novoUsuarioForm.get('email')?.errors?.['email'] &&
+        novoUsuarioForm.get('email')?.touched
+      "
+      mensagem="Email no formato incorreto"
+    >
+    </app-mensagens>
+  </div>
+
+  <div class="form-group">
+    <input
+      placeholder="Nome Completo"
+      class="form-control"
+      formControlName="fullName"
+    />
+    <app-mensagens
+      *ngIf="
+        novoUsuarioForm.get('fullName')?.errors &&
+        novoUsuarioForm.get('fullName')?.touched
+      "
+      mensagem="Nome invalido"
+    ></app-mensagens>
+  </div>
+
+  <div class="form-group">
+    <input
+      placeholder="Usuario"
+      class="form-control"
+      formControlName="userName"
+    />
+    <app-mensagens
+      *ngIf="
+        novoUsuarioForm.get('userName')?.errors?.['minusculo'] &&
+        novoUsuarioForm.get('userName')?.touched
+      "
+      mensagem="Usuario deve ser em letra minuscula"
+    >
+    </app-mensagens>
+    <app-mensagens
+    *ngIf="novoUsuarioForm.get('userName')?.errors?.['usuarioExistente']"
+    mensagem="Usuario já existe"
+    ></app-mensagens>
+  </div>
+
+  <div class="form-group">
+    <input
+      placeholder="Senha"
+      type="password"
+      class="form-control"
+      formControlName="password"
+    />
+  </div>
+  <app-mensagens
+  *ngIf="novoUsuarioForm.errors?.['senhaIgualUsuario']"
+  mensagem="Senha deve ser diferente do usuario"
+  ></app-mensagens>
+
+  <button class="btn btn-primary btn-block">Cadastro</button>
+</form>
+
+<p>Ja é um usuario? <a [routerLink]="['']">Entre</a></p>
